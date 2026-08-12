@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>올리브자동차운전전문학원 | 온라인 수강신청 · 예약금 결제</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --navy-900:#14213D;
+    --navy-800:#1D3159;
+    --navy-700:#2A4675;
+    --navy-500:#5E7DA8;
+    --navy-200:#DCE3F0;
+    --navy-100:#EEF2F9;
+    --pink-700:#A01656;
+    --pink-600:#DA2372;
+    --pink-500:#E8558F;
+    --pink-200:#F7C7DA;
+    --pink-100:#FDEBF2;
+    --coral:#DA2372;
+    --coral-dark:#A01656;
+    --bg:#F7F7F9;
+    --ink:#1A2333;
+    --sub:#6B7280;
+    --note:#98A2B3;
+    --line:#E5E7EB;
+    --white:#FFFFFF;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --shadow-sm:0 2px 10px rgba(20,33,61,0.06);
+    --shadow-md:0 12px 32px rgba(20,33,61,0.10);
+    --shadow-lg:0 20px 50px rgba(20,33,61,0.16);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:96px;
+  }
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:560px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(247,247,249,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:560px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;color:var(--navy-800);}
+  .brand-mark{
+    width:26px;height:26px;border-radius:8px;
+    background:linear-gradient(135deg,var(--navy-800),var(--pink-600));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:13px;font-weight:900;
+  }
+  .tel-btn{
+    display:flex;align-items:center;gap:6px;
+    font-size:13px;font-weight:700;color:var(--navy-800);
+    background:rgba(255,255,255,0.55);
+    -webkit-backdrop-filter:blur(12px) saturate(160%);
+    backdrop-filter:blur(12px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.65);
+    box-shadow:0 4px 14px rgba(20,33,61,0.12), inset 0 1px 0 rgba(255,255,255,0.55);
+    padding:7px 14px;border-radius:999px;text-decoration:none;
+    white-space:nowrap;transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .tel-btn:active{transform:scale(0.95);box-shadow:0 2px 8px rgba(20,33,61,0.12), inset 0 1px 0 rgba(255,255,255,0.55);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:28px 0 8px;}
+  .badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+  .badge{
+    font-size:12px;font-weight:700;color:var(--navy-800);
+    background:var(--navy-100);border:1px solid var(--navy-200);
+    padding:5px 10px;border-radius:999px;
+  }
+  .badge.accent{color:var(--pink-700);background:var(--pink-100);border-color:var(--pink-200);}
+  .hero h1{
+    font-size:27px;line-height:1.35;font-weight:800;letter-spacing:-0.5px;
+    margin:0 0 10px;color:var(--navy-900);
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--pink-600);
+    background:linear-gradient(180deg,transparent 62%, var(--navy-200) 62%);
+  }
+  .hero p{font-size:14.5px;color:var(--sub);margin:0 0 16px;}
+  .notice-box{
+    background:var(--navy-100);border:1px solid var(--navy-200);
+    border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;
+  }
+  .notice-box p{font-size:11.5px;color:var(--sub);line-height:1.6;margin:0;}
+  .notice-box p + p{margin-top:2px;}
+
+  /* ---------- Progress ---------- */
+  .progress{display:flex;align-items:center;gap:6px;margin:22px 0 18px;}
+  .progress .seg{flex:1;height:4px;border-radius:99px;background:var(--navy-200);overflow:hidden;}
+  .progress .seg i{display:block;height:100%;width:0%;background:var(--pink-600);transition:width .35s ease;}
+  .progress .seg.done i{width:100%;}
+  .progress .seg.active i{width:55%;}
+  .progress-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);font-weight:700;margin-bottom:6px;}
+  .progress-labels .cur{color:var(--pink-600);}
+
+  /* ---------- Card / sections ---------- */
+  .card{
+    background:var(--white);border:1px solid var(--line);
+    border-radius:var(--radius-lg);padding:22px 20px;
+    margin-bottom:14px;box-shadow:var(--shadow-sm);
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .card.locked{opacity:.45;pointer-events:none;}
+  .card-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .step-num{
+    width:26px;height:26px;border-radius:50%;background:var(--navy-800);color:#fff;
+    font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .card.locked .step-num{background:#C6CCD6;}
+  .card-title{font-size:16px;font-weight:800;color:var(--navy-900);}
+  .card-sub{font-size:12.5px;color:var(--sub);margin-top:2px;}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--navy-800);margin-bottom:6px;}
+  .field .req{color:var(--pink-600);margin-left:2px;}
+  .field input[type=text], .field input[type=tel]{
+    width:100%;padding:14px 14px;border-radius:var(--radius-sm);
+    border:1.5px solid var(--line);background:var(--bg);
+    font-size:15px;font-family:inherit;color:var(--ink);
+    transition:border-color .2s, background .2s;
+  }
+  .field input:focus{outline:none;border-color:var(--pink-600);background:#fff;}
+  .field input.valid{border-color:var(--pink-500);background:#fff;}
+  .helper{font-size:11.5px;color:var(--note);margin-top:5px;}
+  .helper.ok{color:var(--pink-700);font-weight:700;}
+
+  /* 종별 선택 — 그룹형 리스트 */
+  .type-list{display:flex;flex-direction:column;gap:8px;}
+  .type-group-label{
+    font-size:11.5px;font-weight:800;color:var(--sub);
+    text-transform:uppercase;letter-spacing:.4px;
+    margin:10px 0 2px;
+  }
+  .type-group-label:first-child{margin-top:0;}
+  .type-row{
+    position:relative;display:flex;align-items:center;gap:12px;
+    border:1.5px solid var(--line);border-radius:var(--radius-sm);
+    padding:13px 14px;cursor:pointer;background:var(--bg);
+    transition:all .15s ease;
+  }
+  .type-row input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
+  .type-row .emoji{font-size:22px;flex:none;line-height:1;}
+  .type-row .txt{flex:1;min-width:0;}
+  .type-row .name{font-size:13.5px;font-weight:700;color:var(--ink);}
+  .type-row .desc{font-size:11.5px;color:var(--sub);margin-top:2px;}
+  .type-row .radio{
+    width:20px;height:20px;border-radius:50%;flex:none;
+    border:1.5px solid var(--line);background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .15s ease;
+  }
+  .type-row .radio::after{
+    content:'';width:9px;height:9px;border-radius:50%;
+    background:var(--pink-600);transform:scale(0);transition:transform .15s ease;
+  }
+  .type-row.sel{
+    border-color:var(--pink-600);background:var(--pink-100);
+    box-shadow:0 0 0 3px rgba(218,35,114,0.12);
+  }
+  .type-row.sel .name{color:var(--pink-700);}
+  .type-row.sel .radio{border-color:var(--pink-600);}
+  .type-row.sel .radio::after{transform:scale(1);}
+
+  /* 결제수단 */
+  .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
+  .pay-opt{
+    position:relative;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+    padding:12px 10px;display:flex;align-items:center;gap:9px;cursor:pointer;background:var(--bg);
+  }
+  .pay-opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
+  .pay-opt .ico{
+    width:26px;height:26px;border-radius:7px;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;
+  }
+  .pay-opt .name{font-size:12.5px;font-weight:700;}
+  .pay-opt.sel{border-color:var(--pink-600);background:var(--pink-100);box-shadow:0 0 0 3px rgba(218,35,114,0.12);}
+  .ico.kakao{background:#F9DE00;color:#3A1D1D;}
+  .ico.toss{background:#1B64DA;}
+  .ico.card{background:var(--navy-700);}
+  .ico.bank{background:var(--pink-600);}
+
+  .amount-box{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--navy-900);color:#fff;border-radius:var(--radius-md);
+    padding:16px 18px;margin-bottom:16px;
+  }
+  .amount-box .lbl{font-size:13px;color:var(--navy-500);font-weight:600;}
+  .amount-box .val{font-size:22px;font-weight:800;}
+  .amount-box .val small{font-size:12px;font-weight:600;color:var(--navy-500);margin-left:3px;}
+
+  .consent{
+    display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--sub);
+    background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:12px 13px;margin-bottom:6px;cursor:pointer;
+  }
+  .consent input{margin-top:2px;flex:none;width:16px;height:16px;accent-color:var(--pink-600);}
+  .consent b{color:var(--ink);}
+  .consent .view-more{color:var(--pink-600);text-decoration:underline;font-weight:700;white-space:nowrap;margin-left:auto;flex:none;}
+
+  .refund-note{
+    font-size:11.5px;color:var(--note);line-height:1.6;margin:10px 2px 0;
+  }
+
+  .submit-btn{
+    width:100%;padding:16px;border:none;border-radius:16px;
+    background:#E9EBEF;color:var(--note);font-size:16px;font-weight:800;
+    cursor:not-allowed;transition:all .2s ease;margin-top:6px;
+  }
+  .submit-btn.active{
+    background:linear-gradient(135deg,var(--coral),var(--coral-dark));
+    color:#fff;cursor:pointer;box-shadow:0 10px 24px rgba(218,35,114,0.35);
+  }
+  .submit-btn.active:active{transform:scale(0.98);}
+
+  /* ---------- FAQ ---------- */
+  .faq{margin-top:22px;}
+  .faq h3{font-size:15px;font-weight:800;color:var(--navy-900);margin:0 0 10px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:13px 2px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink);
+  }
+  .faq-q .arrow{transition:transform .2s ease;color:var(--sub);font-size:12px;}
+  .faq-item.open .arrow{transform:rotate(180deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;font-size:12.5px;color:var(--sub);}
+  .faq-item.open .faq-a{max-height:200px;padding-bottom:14px;}
+
+  footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:11px;color:var(--note);text-align:center;}
+  footer p{margin:3px 0;}
+
+  /* ---------- Sticky mobile CTA ---------- */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(255,255,255,0.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:12px;
+    transform:translateY(120%);transition:transform .3s ease;
+  }
+  .sticky-cta.show{transform:translateY(0);}
+  .sticky-cta .amt{font-size:13px;color:var(--sub);}
+  .sticky-cta .amt b{display:block;font-size:16px;color:var(--navy-900);font-weight:800;}
+  .sticky-cta button{
+    flex:1;padding:13px;border:none;border-radius:14px;font-size:14.5px;font-weight:800;
+    background:#E9EBEF;color:var(--note);
+  }
+  .sticky-cta button.active{background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff;}
+
+  /* ---------- Success modal ---------- */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(20,33,61,0.5);z-index:100;
+    display:none;align-items:flex-end;justify-content:center;
+  }
+  .modal-bg.show{display:flex;}
+  @media(min-width:520px){.modal-bg{align-items:center;}}
+  .modal{
+    background:#fff;border-radius:24px 24px 0 0;padding:30px 24px calc(24px + env(safe-area-inset-bottom));
+    width:100%;max-width:480px;text-align:center;
+    animation:up .3s ease;
+  }
+  @media(min-width:520px){.modal{border-radius:24px;}}
+  @keyframes up{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal .check-circle{
+    width:56px;height:56px;border-radius:50%;background:var(--pink-100);color:var(--pink-700);
+    display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;
+  }
+  .modal h4{font-size:18px;font-weight:800;color:var(--navy-900);margin:0 0 8px;}
+  .modal p{font-size:13.5px;color:var(--sub);margin:0 0 20px;}
+  .modal .summary{
+    background:var(--bg);border-radius:14px;padding:14px 16px;text-align:left;
+    font-size:13px;margin-bottom:20px;
+  }
+  .modal .summary div{display:flex;justify-content:space-between;padding:4px 0;color:var(--sub);}
+  .modal .summary div b{color:var(--ink);font-weight:700;}
+  .modal button{
+    width:100%;padding:14px;border:none;border-radius:14px;background:var(--navy-800);
+    color:#fff;font-size:14.5px;font-weight:800;cursor:pointer;
+  }
+
+  @media(min-width:601px){
+    body{padding-bottom:0;}
+    .sticky-cta{display:none !important;}
+    .hero h1{font-size:30px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-mark">올</span>올리브자동차운전전문학원</div>
+    <a class="tel-btn" href="tel:031-948-8600">📞 031-948-8600</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="badge-row">
+      <span class="badge">빠릅니다</span>
+      <span class="badge">편리합니다</span>
+      <span class="badge">체계적입니다</span>
+      <span class="badge accent">신뢰합니다</span>
+    </div>
+    <h1>전화도 방문도 필요 없이,<br><em>3분</em>이면 온라인 등록 끝</h1>
+    <p>이름·연락처·희망 종별만 입력하고 예약금 결제까지 온라인에서 한 번에 진행하세요.</p>
+
+    <div class="notice-box">
+      <p>* 빠른 비대면 등록을 위하여 총 학원비의 일부를 계약금으로 선결제하는 페이지입니다.</p>
+      <p>* 계약금은 모든 종별 동일 금액 5만원입니다.</p>
+    </div>
+  </section>
+
+  <div class="progress-labels">
+    <span class="cur" id="lbl1">① 신청자 정보</span>
+    <span id="lbl2">② 종별 선택</span>
+    <span id="lbl3">③ 예약금 결제</span>
+  </div>
+  <div class="progress">
+    <div class="seg active" id="seg1"><i></i></div>
+    <div class="seg" id="seg2"><i></i></div>
+    <div class="seg" id="seg3"><i></i></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="card" id="card1">
+    <div class="card-head">
+      <div class="step-num">1</div>
+      <div><div class="card-title">신청자 정보</div><div class="card-sub">본인 확인을 위해 정확히 입력해주세요</div></div>
+    </div>
+
+    <div class="field">
+      <label>이름<span class="req">*</span></label>
+      <input type="text" id="name" placeholder="실명을 입력해주세요" maxlength="20" autocomplete="name">
+      <div class="helper" id="nameHelper">신분증 상 이름과 동일하게 입력해주세요</div>
+    </div>
+
+    <div class="field">
+      <label>연락처<span class="req">*</span></label>
+      <input type="tel" id="phone" placeholder="010-0000-0000" maxlength="13" autocomplete="tel" inputmode="numeric">
+      <div class="helper" id="phoneHelper">상담 및 예약 확정 안내가 이 번호로 발송됩니다</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="card locked" id="card2">
+    <div class="card-head">
+      <div class="step-num">2</div>
+      <div><div class="card-title">희망 종별 선택</div><div class="card-sub">1개를 선택해주세요</div></div>
+    </div>
+
+    <div class="type-list" id="typeGrid">
+      <div class="type-group-label">면허 종별</div>
+      <label class="type-row" data-name="1·2종 보통">
+        <input type="radio" name="ctype" value="1·2종 보통">
+        <span class="emoji">🚗</span>
+        <span class="txt"><span class="name">1·2종 보통</span><span class="desc">승용차 운전</span></span>
+        <span class="radio"></span>
+      </label>
+      <label class="type-row" data-name="1종 대형">
+        <input type="radio" name="ctype" value="1종 대형">
+        <span class="emoji">🚌</span>
+        <span class="txt"><span class="name">1종 대형</span><span class="desc">버스·대형차량</span></span>
+        <span class="radio"></span>
+      </label>
+      <label class="type-row" data-name="1종 특수">
+        <input type="radio" name="ctype" value="1종 특수">
+        <span class="emoji">🚛</span>
+        <span class="txt"><span class="name">1종 특수</span><span class="desc">특수차량·트레일러</span></span>
+        <span class="radio"></span>
+      </label>
+      <label class="type-row" data-name="2종 소형/원동기">
+        <input type="radio" name="ctype" value="2종 소형/원동기">
+        <span class="emoji">🏍️</span>
+        <span class="txt"><span class="name">2종 소형/원동기</span><span class="desc">오토바이, 이륜차</span></span>
+        <span class="radio"></span>
+      </label>
+      <div class="type-group-label">교육 및 연수</div>
+      <label class="type-row" data-name="도로연수">
+        <input type="radio" name="ctype" value="도로연수">
+        <span class="emoji">🛣️</span>
+        <span class="txt"><span class="name">도로연수</span><span class="desc">실도로 주행 연습</span></span>
+        <span class="radio"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="card locked" id="card3">
+    <div class="card-head">
+      <div class="step-num">3</div>
+      <div><div class="card-title">예약금 결제</div><div class="card-sub">결제수단을 선택하고 결제를 완료하세요</div></div>
+    </div>
+
+    <div class="amount-box">
+      <span class="lbl">결제 예약금</span>
+      <span class="val">50,000<small>원</small></span>
+    </div>
+
+    <div class="pay-grid" id="payGrid">
+      <label class="pay-opt" data-name="카카오페이">
+        <input type="radio" name="pay" value="카카오페이">
+        <span class="ico kakao">K</span><span class="name">카카오페이</span>
+      </label>
+      <label class="pay-opt" data-name="토스페이">
+        <input type="radio" name="pay" value="토스페이">
+        <span class="ico toss">T</span><span class="name">토스페이</span>
+      </label>
+      <label class="pay-opt" data-name="신용카드">
+        <input type="radio" name="pay" value="신용카드">
+        <span class="ico card">💳</span><span class="name">신용카드</span>
+      </label>
+      <label class="pay-opt" data-name="무통장입금">
+        <input type="radio" name="pay" value="무통장입금">
+        <span class="ico bank">🏦</span><span class="name">무통장입금</span>
+      </label>
+    </div>
+
+    <label class="consent">
+      <input type="checkbox" id="consent1">
+      <span><b>[필수]</b> 개인정보 수집·이용 동의 <span class="view-more">보기</span></span>
+    </label>
+    <label class="consent">
+      <input type="checkbox" id="consent2">
+      <span><b>[필수]</b> 예약금 환불 규정 확인 및 동의 <span class="view-more">보기</span></span>
+    </label>
+
+    <p class="refund-note">※ 예약금은 등록 확정 후 학원 환불 규정에 따라 처리됩니다. 정확한 환불·이름변경 조건은 실제 학원 규정 문서로 교체해 안내해주세요.</p>
+
+    <button class="submit-btn" id="submitBtn" disabled>먼저 위 항목을 모두 입력해주세요</button>
+  </div>
+
+  <div class="faq">
+    <h3>자주 묻는 질문</h3>
+    <div class="faq-item">
+      <div class="faq-q">등록 후 상담 연락은 언제 오나요? <span class="arrow">⌄</span></div>
+      <div class="faq-a">예약금 결제가 완료되면 영업일 기준 빠르게 담당자가 문자 또는 전화로 일정을 안내드립니다. (실제 처리 기준으로 문구 수정 필요)</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">종별을 잘못 선택했어요, 변경할 수 있나요? <span class="arrow">⌄</span></div>
+      <div class="faq-a">상담 연락 시 담당자에게 말씀해주시면 변경 도와드립니다. (실제 운영 정책으로 문구 수정 필요)</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">예약금은 환불되나요? <span class="arrow">⌄</span></div>
+      <div class="faq-a">학원의 환불 규정에 따라 처리됩니다. 정확한 조건은 결제 전 반드시 확인해주세요. (실제 규정 문서 링크로 교체 필요)</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>올리브자동차운전전문학원 · 대표 000-000-0000</p>
+    <p>사업자등록번호 000-00-00000 · 주소 00시 00구 00로 00</p>
+    <p>Copyright © 올리브자동차운전전문학원. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<div class="sticky-cta" id="stickyCta">
+  <div class="amt">예약금<b>50,000원</b></div>
+  <button id="stickyBtn" disabled>결제하고 예약 완료</button>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="check-circle">✓</div>
+    <h4>예약금 결제가 완료되었습니다</h4>
+    <p>입력하신 연락처로 곧 담당자가 상담을 도와드릴게요.</p>
+    <div class="summary" id="modalSummary"></div>
+    <button onclick="document.getElementById('modalBg').classList.remove('show')">확인</button>
+  </div>
+</div>
+
+<script>
+  const nameEl = document.getElementById('name');
+  const phoneEl = document.getElementById('phone');
+  const card1 = document.getElementById('card1');
+  const card2 = document.getElementById('card2');
+  const card3 = document.getElementById('card3');
+  const seg1 = document.getElementById('seg1');
+  const seg2 = document.getElementById('seg2');
+  const seg3 = document.getElementById('seg3');
+  const lbl1 = document.getElementById('lbl1');
+  const lbl2 = document.getElementById('lbl2');
+  const lbl3 = document.getElementById('lbl3');
+  const submitBtn = document.getElementById('submitBtn');
+  const stickyCta = document.getElementById('stickyCta');
+  const stickyBtn = document.getElementById('stickyBtn');
+
+  let selectedType = null;
+  let selectedPay = null;
+
+  function formatPhone(v){
+    v = v.replace(/[^0-9]/g,'').slice(0,11);
+    if(v.length < 4) return v;
+    if(v.length < 8) return v.slice(0,3) + '-' + v.slice(3);
+    return v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7,11);
+  }
+  phoneEl.addEventListener('input', (e)=>{
+    e.target.value = formatPhone(e.target.value);
+    checkStep1();
+  });
+  nameEl.addEventListener('input', checkStep1);
+
+  function isValidPhone(v){ return /^01[0-9]-\d{3,4}-\d{4}$/.test(v); }
+
+  function checkStep1(){
+    const nameOk = nameEl.value.trim().length >= 2;
+    const phoneOk = isValidPhone(phoneEl.value);
+    nameEl.classList.toggle('valid', nameOk);
+    phoneEl.classList.toggle('valid', phoneOk);
+
+    if(nameOk && phoneOk){
+      card2.classList.remove('locked');
+      seg1.classList.add('done'); seg1.classList.remove('active');
+      seg2.classList.add('active');
+      lbl1.classList.remove('cur'); lbl2.classList.add('cur');
+    } else {
+      card2.classList.add('locked');
+      card3.classList.add('locked');
+      seg1.classList.remove('done'); seg1.classList.add('active');
+      seg2.classList.remove('active','done'); seg3.classList.remove('active','done');
+      lbl2.classList.remove('cur'); lbl3.classList.remove('cur'); lbl1.classList.add('cur');
+    }
+    updateSubmitState();
+  }
+
+  document.querySelectorAll('#typeGrid .type-row').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      document.querySelectorAll('#typeGrid .type-row').forEach(o=>o.classList.remove('sel'));
+      opt.classList.add('sel');
+      selectedType = opt.dataset.name;
+      opt.querySelector('input').checked = true;
+      card3.classList.remove('locked');
+      seg2.classList.add('done'); seg2.classList.remove('active');
+      seg3.classList.add('active');
+      lbl2.classList.remove('cur'); lbl3.classList.add('cur');
+      updateSubmitState();
+    });
+  });
+
+  document.querySelectorAll('#payGrid .pay-opt').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      document.querySelectorAll('#payGrid .pay-opt').forEach(o=>o.classList.remove('sel'));
+      opt.classList.add('sel');
+      selectedPay = opt.dataset.name;
+      opt.querySelector('input').checked = true;
+      updateSubmitState();
+    });
+  });
+
+  const c1 = document.getElementById('consent1');
+  const c2 = document.getElementById('consent2');
+  c1.addEventListener('change', updateSubmitState);
+  c2.addEventListener('change', updateSubmitState);
+
+  function updateSubmitState(){
+    const ready = nameEl.classList.contains('valid') && phoneEl.classList.contains('valid')
+                  && selectedType && selectedPay && c1.checked && c2.checked;
+    submitBtn.disabled = !ready;
+    submitBtn.classList.toggle('active', ready);
+    submitBtn.textContent = ready ? '50,000원 결제하고 예약 완료하기' : '먼저 위 항목을 모두 입력해주세요';
+    stickyBtn.disabled = !ready;
+    stickyBtn.classList.toggle('active', ready);
+  }
+
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    stickyCta.classList.toggle('show', y > 260 && window.innerWidth <= 600);
+  });
+
+  function submitForm(){
+    if(submitBtn.disabled) return;
+    document.getElementById('modalSummary').innerHTML =
+      '<div>이름<b>'+nameEl.value+'</b></div>'+
+      '<div>연락처<b>'+phoneEl.value+'</b></div>'+
+      '<div>희망 종별<b>'+selectedType+'</b></div>'+
+      '<div>결제수단<b>'+selectedPay+'</b></div>'+
+      '<div>결제금액<b>50,000원</b></div>';
+    document.getElementById('modalBg').classList.add('show');
+  }
+  submitBtn.addEventListener('click', submitForm);
+  stickyBtn.addEventListener('click', submitForm);
+
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click', ()=>{
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
