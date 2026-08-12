@@ -84,11 +84,10 @@
   .hero{padding:28px 0 8px;}
   .badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
   .badge{
-    font-size:12px;font-weight:700;color:var(--navy-800);
-    background:var(--navy-100);border:1px solid var(--navy-200);
+    font-size:12px;font-weight:700;color:#fff;
+    background:var(--pink-600);border:1px solid var(--pink-600);
     padding:5px 10px;border-radius:999px;
   }
-  .badge.accent{color:var(--pink-700);background:var(--pink-100);border-color:var(--pink-200);}
   .hero h1{
     font-size:27px;line-height:1.35;font-weight:800;letter-spacing:-0.5px;
     margin:0 0 10px;color:var(--navy-900);
@@ -105,14 +104,27 @@
   .notice-box p{font-size:11.5px;color:var(--sub);line-height:1.6;margin:0;}
   .notice-box p + p{margin-top:2px;}
 
-  /* ---------- Progress ---------- */
-  .progress{display:flex;align-items:center;gap:6px;margin:22px 0 18px;}
-  .progress .seg{flex:1;height:4px;border-radius:99px;background:var(--navy-200);overflow:hidden;}
-  .progress .seg i{display:block;height:100%;width:0%;background:var(--pink-600);transition:width .35s ease;}
-  .progress .seg.done i{width:100%;}
-  .progress .seg.active i{width:55%;}
-  .progress-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);font-weight:700;margin-bottom:6px;}
-  .progress-labels .cur{color:var(--pink-600);}
+  /* ---------- Progress (원형 스텝 인디케이터) ---------- */
+  .step-indicator{display:flex;align-items:flex-start;margin:26px 0 22px;}
+  .step-indicator .step{display:flex;flex-direction:column;align-items:flex-start;flex:none;}
+  .step-indicator .dot{
+    width:38px;height:38px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:800;color:var(--sub);
+    background:var(--navy-200);
+    transition:background .25s ease,color .25s ease;
+  }
+  .step-indicator .dot.filled{background:var(--pink-600);color:#fff;}
+  .step-indicator .step-label{
+    margin-top:8px;font-size:12px;font-weight:700;color:var(--sub);
+    white-space:nowrap;
+  }
+  .step-indicator .step-label.cur{color:var(--pink-600);}
+  .step-indicator .connector{
+    flex:1;height:2px;background:var(--navy-200);
+    margin:18px 6px 0;transition:background .25s ease;
+  }
+  .step-indicator .connector.done{background:var(--pink-600);}
 
   /* ---------- Card / sections ---------- */
   .card{
@@ -202,13 +214,14 @@
   .ico.bank{background:var(--pink-600);}
 
   .amount-box{
-    display:flex;align-items:center;justify-content:space-between;
     background:var(--navy-900);color:#fff;border-radius:var(--radius-md);
     padding:16px 18px;margin-bottom:16px;
   }
-  .amount-box .lbl{font-size:13px;color:var(--navy-500);font-weight:600;}
+  .amount-box .amount-row{display:flex;align-items:center;justify-content:space-between;}
+  .amount-box .lbl{font-size:13px;color:#fff;font-weight:600;}
   .amount-box .val{font-size:22px;font-weight:800;}
   .amount-box .val small{font-size:12px;font-weight:600;color:var(--navy-500);margin-left:3px;}
+  .amount-box .amount-note{font-size:11px;color:var(--navy-500);margin-top:6px;}
 
   .consent{
     display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--sub);
@@ -319,10 +332,7 @@
 
   <section class="hero">
     <div class="badge-row">
-      <span class="badge">빠릅니다</span>
-      <span class="badge">편리합니다</span>
-      <span class="badge">체계적입니다</span>
-      <span class="badge accent">신뢰합니다</span>
+      <span class="badge">빠른 온라인 수강신청</span>
     </div>
     <h1>전화도 방문도 필요 없이,<br><em>3분</em>이면 온라인 등록 끝</h1>
     <p>이름·연락처·희망 종별만 입력하고 예약금 결제까지 온라인에서 한 번에 진행하세요.</p>
@@ -330,19 +340,25 @@
     <div class="notice-box">
       <p>* 빠른 비대면 등록을 위하여 총 학원비의 일부를 계약금으로 선결제하는 페이지입니다.</p>
       <p>* 계약금을 차감한 수강료는 교육 첫 날 학원 현장에서 결제합니다.</p>
-      <p>* 계약금은 모든 종별 동일 금액 5만원입니다.</p>
+      <p>* 계약금은 모든 종별 동일 금액 <b>5만원</b>입니다.</p>
     </div>
   </section>
 
-  <div class="progress-labels">
-    <span class="cur" id="lbl1">① 신청자 정보</span>
-    <span id="lbl2">② 종별 선택</span>
-    <span id="lbl3">③ 예약금 결제</span>
-  </div>
-  <div class="progress">
-    <div class="seg active" id="seg1"><i></i></div>
-    <div class="seg" id="seg2"><i></i></div>
-    <div class="seg" id="seg3"><i></i></div>
+  <div class="step-indicator">
+    <div class="step">
+      <div class="dot filled" id="dot1">1</div>
+      <div class="step-label cur" id="lbl1">신청자 정보</div>
+    </div>
+    <div class="connector" id="conn1"></div>
+    <div class="step">
+      <div class="dot" id="dot2">2</div>
+      <div class="step-label" id="lbl2">종별 선택</div>
+    </div>
+    <div class="connector" id="conn2"></div>
+    <div class="step">
+      <div class="dot" id="dot3">3</div>
+      <div class="step-label" id="lbl3">예약금 결제</div>
+    </div>
   </div>
 
   <!-- STEP 1 -->
@@ -416,8 +432,11 @@
     </div>
 
     <div class="amount-box">
-      <span class="lbl">결제 예약금</span>
-      <span class="val">50,000<small>원</small></span>
+      <div class="amount-row">
+        <span class="lbl">결제 예약금</span>
+        <span class="val">50,000<small>원</small></span>
+      </div>
+      <div class="amount-note">* 잔여 수강료는 첫날 현장 결제</div>
     </div>
 
     <div class="pay-grid" id="payGrid">
@@ -441,7 +460,7 @@
 
     <label class="consent">
       <input type="checkbox" id="consent1">
-      <span><b>[필수]</b> 개인정보 수집·이용 동의 <span class="view-more">보기</span></span>
+      <span><b>[필수]</b> 개인정보 수집·이용 동의</span>
     </label>
     <label class="consent">
       <input type="checkbox" id="consent2">
@@ -498,9 +517,10 @@
   const card1 = document.getElementById('card1');
   const card2 = document.getElementById('card2');
   const card3 = document.getElementById('card3');
-  const seg1 = document.getElementById('seg1');
-  const seg2 = document.getElementById('seg2');
-  const seg3 = document.getElementById('seg3');
+  const dot2 = document.getElementById('dot2');
+  const dot3 = document.getElementById('dot3');
+  const conn1 = document.getElementById('conn1');
+  const conn2 = document.getElementById('conn2');
   const lbl1 = document.getElementById('lbl1');
   const lbl2 = document.getElementById('lbl2');
   const lbl3 = document.getElementById('lbl3');
@@ -532,12 +552,12 @@
     phoneEl.classList.toggle('valid', phoneOk);
 
     if(nameOk && phoneOk){
-      seg1.classList.add('done'); seg1.classList.remove('active');
-      seg2.classList.add('active');
+      dot2.classList.add('filled');
+      conn1.classList.add('done');
       lbl1.classList.remove('cur'); lbl2.classList.add('cur');
     } else {
-      seg1.classList.remove('done'); seg1.classList.add('active');
-      seg2.classList.remove('active','done'); seg3.classList.remove('active','done');
+      dot2.classList.remove('filled'); dot3.classList.remove('filled');
+      conn1.classList.remove('done'); conn2.classList.remove('done');
       lbl2.classList.remove('cur'); lbl3.classList.remove('cur'); lbl1.classList.add('cur');
     }
     updateSubmitState();
@@ -549,8 +569,8 @@
       opt.classList.add('sel');
       selectedType = opt.dataset.name;
       opt.querySelector('input').checked = true;
-      seg2.classList.add('done'); seg2.classList.remove('active');
-      seg3.classList.add('active');
+      dot3.classList.add('filled');
+      conn2.classList.add('done');
       lbl2.classList.remove('cur'); lbl3.classList.add('cur');
       updateSubmitState();
     });
