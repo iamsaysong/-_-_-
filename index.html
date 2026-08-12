@@ -162,8 +162,8 @@
   .type-row input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
   .type-row .emoji{font-size:22px;flex:none;line-height:1;}
   .type-row .txt{flex:1;min-width:0;}
-  .type-row .name{font-size:13.5px;font-weight:700;color:var(--ink);}
-  .type-row .desc{font-size:11.5px;color:var(--sub);margin-top:2px;}
+  .type-row .name{font-size:13.5px;font-weight:700;color:var(--ink);display:block;}
+  .type-row .desc{font-size:11.5px;color:var(--sub);margin-top:2px;display:block;}
   .type-row .radio{
     width:20px;height:20px;border-radius:50%;flex:none;
     border:1.5px solid var(--line);background:#fff;
@@ -175,12 +175,13 @@
     background:var(--pink-600);transform:scale(0);transition:transform .15s ease;
   }
   .type-row.sel{
-    border-color:var(--pink-600);background:var(--pink-100);
-    box-shadow:0 0 0 3px rgba(218,35,114,0.12);
+    border-color:var(--pink-600);background:var(--pink-600);
+    box-shadow:0 6px 16px rgba(218,35,114,0.32);
   }
-  .type-row.sel .name{color:var(--pink-700);}
-  .type-row.sel .radio{border-color:var(--pink-600);}
-  .type-row.sel .radio::after{transform:scale(1);}
+  .type-row.sel .name{color:#fff;}
+  .type-row.sel .desc{color:rgba(255,255,255,0.78);}
+  .type-row.sel .radio{border-color:#fff;background:transparent;}
+  .type-row.sel .radio::after{background:#fff;transform:scale(1);}
 
   /* 결제수단 */
   .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
@@ -328,6 +329,7 @@
 
     <div class="notice-box">
       <p>* 빠른 비대면 등록을 위하여 총 학원비의 일부를 계약금으로 선결제하는 페이지입니다.</p>
+      <p>* 계약금을 차감한 수강료는 교육 첫 날 학원 현장에서 결제합니다.</p>
       <p>* 계약금은 모든 종별 동일 금액 5만원입니다.</p>
     </div>
   </section>
@@ -364,7 +366,7 @@
   </div>
 
   <!-- STEP 2 -->
-  <div class="card locked" id="card2">
+  <div class="card" id="card2">
     <div class="card-head">
       <div class="step-num">2</div>
       <div><div class="card-title">희망 종별 선택</div><div class="card-sub">1개를 선택해주세요</div></div>
@@ -407,7 +409,7 @@
   </div>
 
   <!-- STEP 3 -->
-  <div class="card locked" id="card3">
+  <div class="card" id="card3">
     <div class="card-head">
       <div class="step-num">3</div>
       <div><div class="card-title">예약금 결제</div><div class="card-sub">결제수단을 선택하고 결제를 완료하세요</div></div>
@@ -530,13 +532,10 @@
     phoneEl.classList.toggle('valid', phoneOk);
 
     if(nameOk && phoneOk){
-      card2.classList.remove('locked');
       seg1.classList.add('done'); seg1.classList.remove('active');
       seg2.classList.add('active');
       lbl1.classList.remove('cur'); lbl2.classList.add('cur');
     } else {
-      card2.classList.add('locked');
-      card3.classList.add('locked');
       seg1.classList.remove('done'); seg1.classList.add('active');
       seg2.classList.remove('active','done'); seg3.classList.remove('active','done');
       lbl2.classList.remove('cur'); lbl3.classList.remove('cur'); lbl1.classList.add('cur');
@@ -550,7 +549,6 @@
       opt.classList.add('sel');
       selectedType = opt.dataset.name;
       opt.querySelector('input').checked = true;
-      card3.classList.remove('locked');
       seg2.classList.add('done'); seg2.classList.remove('active');
       seg3.classList.add('active');
       lbl2.classList.remove('cur'); lbl3.classList.add('cur');
