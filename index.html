@@ -199,7 +199,7 @@
   .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
   .pay-opt{
     position:relative;border:1.5px solid var(--line);border-radius:var(--radius-sm);
-    padding:12px 10px;display:flex;align-items:center;gap:9px;cursor:pointer;background:var(--bg);
+    padding:12px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;cursor:pointer;background:var(--bg);
   }
   .pay-opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
   .pay-opt .ico{
@@ -207,9 +207,13 @@
     display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;
   }
   .pay-opt .name{font-size:12.5px;font-weight:700;}
+  .pay-opt .pay-note{
+    flex-basis:100%;font-size:10.5px;color:var(--sub);font-weight:600;
+    padding-left:35px;
+  }
   .pay-opt.sel{border-color:var(--pink-600);background:var(--pink-100);box-shadow:0 0 0 3px rgba(218,35,114,0.12);}
   .ico.kakao{background:#F9DE00;color:#3A1D1D;}
-  .ico.toss{background:#1B64DA;}
+  .ico.naver{background:#03C75A;}
   .ico.card{background:var(--navy-700);}
   .ico.bank{background:var(--pink-600);}
 
@@ -222,6 +226,25 @@
   .amount-box .val{font-size:22px;font-weight:800;}
   .amount-box .val small{font-size:12px;font-weight:600;color:var(--navy-500);margin-left:3px;}
   .amount-box .amount-note{font-size:11px;color:var(--navy-500);margin-top:6px;}
+
+  .call-callout{
+    background:var(--pink-100);border:1.5px solid var(--pink-600);
+    border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:12px;
+  }
+  .call-callout-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .call-callout-icon{
+    width:26px;height:26px;border-radius:50%;background:var(--pink-600);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;flex:none;
+  }
+  .call-callout-title{font-size:14px;font-weight:800;color:var(--pink-700);}
+  .call-callout-body{font-size:13px;color:var(--ink);line-height:1.6;margin:0 0 12px;}
+  .call-callout-body b{color:var(--pink-700);}
+  .call-callout-check{
+    display:flex;align-items:flex-start;gap:9px;font-size:12.5px;font-weight:700;color:var(--pink-700);
+    background:#fff;border:1px solid var(--pink-200);border-radius:var(--radius-sm);
+    padding:11px 12px;cursor:pointer;
+  }
+  .call-callout-check input{margin-top:2px;flex:none;width:16px;height:16px;accent-color:var(--pink-600);}
 
   .consent{
     display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--sub);
@@ -334,7 +357,7 @@
     <div class="badge-row">
       <span class="badge">빠른 온라인 수강신청</span>
     </div>
-    <h1>전화도 방문도 필요 없이,<br><em>3분</em>이면 온라인 등록 끝</h1>
+    <h1>전화도 방문도 필요 없이,<br><em>3분</em>이면 등록 끝</h1>
     <p>이름·연락처·희망 종별만 입력하고 예약금 결제까지 온라인에서 한 번에 진행하세요.</p>
 
     <div class="notice-box">
@@ -440,14 +463,6 @@
     </div>
 
     <div class="pay-grid" id="payGrid">
-      <label class="pay-opt" data-name="카카오페이">
-        <input type="radio" name="pay" value="카카오페이">
-        <span class="ico kakao">K</span><span class="name">카카오페이</span>
-      </label>
-      <label class="pay-opt" data-name="토스페이">
-        <input type="radio" name="pay" value="토스페이">
-        <span class="ico toss">T</span><span class="name">토스페이</span>
-      </label>
       <label class="pay-opt" data-name="신용카드">
         <input type="radio" name="pay" value="신용카드">
         <span class="ico card">💳</span><span class="name">신용카드</span>
@@ -455,6 +470,27 @@
       <label class="pay-opt" data-name="무통장입금">
         <input type="radio" name="pay" value="무통장입금">
         <span class="ico bank">🏦</span><span class="name">무통장입금</span>
+        <span class="pay-note">00은행 00000000계좌번호</span>
+      </label>
+      <label class="pay-opt" data-name="네이버페이">
+        <input type="radio" name="pay" value="네이버페이">
+        <span class="ico naver">N</span><span class="name">네이버페이</span>
+      </label>
+      <label class="pay-opt" data-name="카카오페이">
+        <input type="radio" name="pay" value="카카오페이">
+        <span class="ico kakao">K</span><span class="name">카카오페이</span>
+      </label>
+    </div>
+
+    <div class="call-callout">
+      <div class="call-callout-head">
+        <span class="call-callout-icon">📞</span>
+        <span class="call-callout-title">결제 후 반드시 전화해주세요</span>
+      </div>
+      <p class="call-callout-body">계약금 결제 후 <b>031-000-0000 내선 2번</b>으로 전화하셔서 전화 등록 및 교육일정 예약을 진행해주세요.</p>
+      <label class="call-callout-check">
+        <input type="checkbox" id="consent3">
+        <span>[필수] 위 안내를 확인했으며, 결제 후 꼭 전화하겠습니다</span>
       </label>
     </div>
 
@@ -588,12 +624,14 @@
 
   const c1 = document.getElementById('consent1');
   const c2 = document.getElementById('consent2');
+  const c3 = document.getElementById('consent3');
   c1.addEventListener('change', updateSubmitState);
   c2.addEventListener('change', updateSubmitState);
+  c3.addEventListener('change', updateSubmitState);
 
   function updateSubmitState(){
     const ready = nameEl.classList.contains('valid') && phoneEl.classList.contains('valid')
-                  && selectedType && selectedPay && c1.checked && c2.checked;
+                  && selectedType && selectedPay && c1.checked && c2.checked && c3.checked;
     submitBtn.disabled = !ready;
     submitBtn.classList.toggle('active', ready);
     submitBtn.textContent = ready ? '50,000원 결제하고 예약 완료하기' : '먼저 위 항목을 모두 입력해주세요';
